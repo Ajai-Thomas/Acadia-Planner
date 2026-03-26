@@ -60,14 +60,32 @@ const StudyPlanPage = () => {
         <div className="grid gap-4 md:grid-cols-2">
           {days.map((day, index) => {
             const subject = subjects[index % subjects.length];
-            const window = availability[day] || [];
+            const rawSlots = availability[day] || [];
+            // Handle both 1D and 2D array formats for the UI
+            const slots = Array.isArray(rawSlots) && Array.isArray(rawSlots[0]) 
+              ? rawSlots 
+              : Array.isArray(rawSlots) && typeof rawSlots[0] === 'string'
+                ? [rawSlots]
+                : [];
 
             return (
               <Card key={day} className="bg-white">
                 <p className="text-sm font-semibold uppercase tracking-wide text-planetary">{day}</p>
                 <h3 className="mt-2 text-xl font-bold">{subject?.name || 'General Review'}</h3>
-                <p className="mt-1 text-sm text-galaxy/70">{window[0]} - {window[1]}</p>
-                <div className="mt-4 rounded-lg bg-sky p-3 text-sm text-galaxy">Click the "Auto-Generate Smart Plan" button to dynamically map your schedule.</div>
+                <div className="mt-2 space-y-1">
+                  {slots.map((slot, idx) => (
+                    <div key={idx} className="text-sm text-galaxy/70 flex items-center">
+                      <span className="w-16">Slot {idx + 1}:</span>
+                      <span className="font-medium text-galaxy">{slot[0]} - {slot[1]}</span>
+                    </div>
+                  ))}
+                  {slots.length === 0 && (
+                    <p className="text-sm text-gray-400 italic">No time slots set</p>
+                  )}
+                </div>
+                <div className="mt-4 rounded-lg bg-sky p-3 text-sm text-galaxy">
+                  Click the "Auto-Generate Smart Plan" button to dynamically map your schedule.
+                </div>
               </Card>
             );
           })}
