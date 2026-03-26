@@ -15,7 +15,9 @@ const Navbar = () => {
             ['Dashboard', '/dashboard'],
             ['Subjects', '/subjects'],
             ['Tasks', '/tasks'],
+            ['Availability', '/availability'],
             ['Plan', '/plan'],
+            ['Profile', '/profile'],
           ].map(([label, href]) => (
             <Link 
               key={href} 

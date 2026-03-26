@@ -8,6 +8,7 @@ import { usePlanner } from '../context/PlannerContext';
 const SubjectsPage = () => {
   const { subjects, addSubject, removeSubject } = usePlanner();
   const [newSubject, setNewSubject] = useState('');
+  const [difficulty, setDifficulty] = useState('Medium');
 
   const handleAddSubject = (e) => {
     e.preventDefault();
@@ -16,8 +17,12 @@ const SubjectsPage = () => {
         id: Date.now().toString(),
         name: newSubject.trim(),
         color: '#ccff00', // Neon accent color
+        difficulty: difficulty,
+        progress: 0,
+        examDate: null,
       });
       setNewSubject('');
+      setDifficulty('Medium');
     }
   };
 
@@ -25,7 +30,7 @@ const SubjectsPage = () => {
     <PageShell title="Manage Subjects">
       {/* Subject Input Form Container */}
       <Card className="mb-8 bg-white border-none shadow-2xl">
-        <form onSubmit={handleAddSubject} className="grid gap-4 md:grid-cols-[1fr_auto]">
+        <form onSubmit={handleAddSubject} className="grid gap-4 md:grid-cols-[1fr_auto_auto]">
           <input
             type="text"
             placeholder="New Subject Name (e.g. Mathematics)"
@@ -33,6 +38,15 @@ const SubjectsPage = () => {
             value={newSubject}
             onChange={(e) => setNewSubject(e.target.value)}
           />
+          <select
+            className="rounded-full bg-gray-100 px-6 py-4 text-black outline-none border-2 border-transparent focus:border-neon transition-all"
+            value={difficulty}
+            onChange={(e) => setDifficulty(e.target.value)}
+          >
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
           <Button type="submit" variant="primary">
             <span className="text-black">Add Subject</span>
           </Button>
