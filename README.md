@@ -56,13 +56,19 @@ pip install django djangorestframework django-cors-headers python-dotenv psycopg
             langchain-community langchain-google-genai langchain-text-splitters chromadb pypdf
 ```
 
-Create `backend/.env` with your key (never commit this file):
+Copy `backend/.env.example` to `backend/.env` and fill in your values (never commit `.env`):
 
 ```env
+DJANGO_SECRET_KEY=generate-a-long-random-string
 GOOGLE_API_KEY=your_gemini_api_key
+DB_NAME=acadia_planner
+DB_USER=postgres
+DB_PASSWORD=your_postgres_password
+DB_HOST=localhost
+DB_PORT=5432
 ```
 
-Set your own PostgreSQL credentials in `backend/acadia_project/settings.py`, then run:
+Then run:
 
 ```bash
 python manage.py migrate
