@@ -28,3 +28,11 @@ coverage/
 
 # Vite cache
 .vite/
+
+# Secrets, local databases and generated files
+backend/.env
+*.sqlite3
+backend/chroma_db/
+__pycache__/
+*.pyc
+backend/media/
